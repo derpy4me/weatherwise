@@ -1,7 +1,42 @@
-<main class="main">
-  <div class="content">
-    {{ this.weatherData | json }}
+<main class="main-container">
+
+  <header class="app-header">
+    <h1>WeatherWise</h1>
+    <p>Your personal weather dashboard</p>
+  </header>
+
+  <app-search (citySearched)="handleCitySearch($event)"></app-search>
+
+  <div class="content-area">
+
+    <div *ngIf="isLoading" class="status-message">
+      <p>Fetching weather data...</p>
+    </div>
+
+    <div *ngIf="error && !isLoading" class="status-message error-message">
+      <h2>An Error Occurred</h2>
+      <p>{{ error.error?.message || 'Could not fetch data. Please try another city.' }}</p>
+    </div>
+
+    <div *ngIf="weatherData && locationData && !isLoading">
+
+      <h2 class="location-title">
+        Weather for {{ locationData.name }}, {{ locationData.state ? locationData.state + ', ' : '' }}{{
+        locationData.country }}
+      </h2>
+
+      <div class="raw-json-container">
+        <h3>Current Weather Data (Raw)</h3>
+        <pre>{{ weatherData.current | json }}</pre>
+
+        <h3>Forecast Data (Raw)</h3>
+        <pre>{{ weatherData.forecast | json }}</pre>
+      </div>
+
+    </div>
+
   </div>
+
 </main>
 
 <router-outlet />

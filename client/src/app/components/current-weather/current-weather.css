@@ -1,0 +1,48 @@
+.current-weather-card {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.main-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.weather-icon {
+  width: 80px;
+  height: 80px;
+}
+.temp {
+  font-size: 3rem;
+  font-weight: bold;
+}
+.description {
+  text-transform: capitalize;
+  font-size: 1.25rem;
+  color: #555;
+}
+.details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 1.5rem;
+}
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+.detail-item span:first-child {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+.detail-item span:last-child {
+  font-weight: 500;
+  font-size: 1.1rem;
+}

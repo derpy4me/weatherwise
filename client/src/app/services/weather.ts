@@ -16,4 +16,9 @@ export class WeatherService {
 
     return this.http.get(`${this.apiUrl}/weather`, { params });
   }
+
+  getGeocode(cityName: string): Observable<any> {
+    const params = new HttpParams().set('city', cityName);
+    return this.http.get(`${this.apiUrl}/geocode`, { params });
+  }
 }
