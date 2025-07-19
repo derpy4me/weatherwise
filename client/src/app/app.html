@@ -25,13 +25,9 @@
         locationData.country }}
       </h2>
 
-      <div class="raw-json-container">
-        <h3>Current Weather Data (Raw)</h3>
-        <pre>{{ weatherData.current | json }}</pre>
+      <app-current-weather [currentWeather]="weatherData.current"></app-current-weather>
 
-        <h3>Forecast Data (Raw)</h3>
-        <pre>{{ weatherData.forecast | json }}</pre>
-      </div>
+      <app-forecast [forecast]="weatherData.forecast"></app-forecast>
 
     </div>
 

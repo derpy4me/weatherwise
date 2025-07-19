@@ -1,13 +1,15 @@
-import { CommonModule, DecimalPipe, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { switchMap } from 'rxjs';
+import { CurrentWeather } from './components/current-weather/current-weather';
+import { Forecast } from './components/forecast/forecast';
 import { Search } from './components/search/search';
 import { WeatherService } from './services/weather';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, JsonPipe, DecimalPipe, Search, CommonModule],
+  imports: [RouterOutlet, Search, CommonModule, CurrentWeather, Forecast],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

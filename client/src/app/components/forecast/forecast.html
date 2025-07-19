@@ -1,0 +1,13 @@
+<div class="forecast-container" *ngIf="forecast && forecast.length > 0">
+  <h3 class="forecast-title">5-Day Forecast</h3>
+  <div class="cards-wrapper">
+    <div *ngFor="let day of forecast" class="forecast-day-card">
+      <div class="day">{{ day.dayOfWeek }}</div>
+      <img class="weather-icon" [src]="day.icon" [alt]="day.description">
+      <div class="temps">
+        <span class="temp-max">{{ day.temp_max | number:'1.0-0' }}°</span>
+        <span class="temp-min">{{ day.temp_min | number:'1.0-0' }}°</span>
+      </div>
+    </div>
+  </div>
+</div>

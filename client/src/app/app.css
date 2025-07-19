@@ -1,3 +1,11 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #f0f4f8;
+  background-image: linear-gradient(to top, #cbe3f7 0%, #d0dbe9 100%);
+  padding-top: 1px;
+}
+
 .main-container {
   max-width: 800px;
   margin: 2rem auto;
@@ -45,23 +53,4 @@
   margin-bottom: 1.5rem;
   border-bottom: 1px solid #dee2e6;
   padding-bottom: 1rem;
-}
-
-.raw-json-container {
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 8px;
-  padding: 1rem;
-}
-
-.raw-json-container h3 {
-  margin-top: 0;
-}
-
-.raw-json-container pre {
-  background-color: #e9ecef;
-  padding: 1rem;
-  border-radius: 6px;
-  white-space: pre-wrap;
-  word-break: break-all;
 }
