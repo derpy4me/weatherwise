@@ -5,7 +5,6 @@ const SavedLocationSchema = new mongoose.Schema(
     cityId: {
       type: Number,
       required: true,
-      unique: true,
     },
     name: {
       type: String,

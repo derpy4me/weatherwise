@@ -24,16 +24,16 @@
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 500;
-  color: #fff;
-  background-color: #0d6efd;
-  border: 1px solid #0d6efd;
+  color: #183049;
+  background-color: #89cff0;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
   transition: background-color 0.15s ease-in-out;
 }
 
 .search-button:hover {
-  background-color: #0b5ed7;
+  background-color: #5db3db;
 }
 
 .search-button:disabled,

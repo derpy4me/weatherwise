@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { Observable } from 'rxjs';
 import { CurrentWeather } from './components/current-weather/current-weather';
 import { Forecast } from './components/forecast/forecast';
 import {
@@ -18,6 +20,7 @@ import { WeatherService } from './services/weather';
     RouterOutlet,
     Search,
     CommonModule,
+    FormsModule,
     CurrentWeather,
     Forecast,
     SavedLocationsComponent,
@@ -33,10 +36,21 @@ export class App {
   isLoading: boolean = false;
   savedLocations: SavedLocation[] = [];
 
+  usernameInput: string = '';
+  currentUser$: Observable<string | null>;
+
   constructor(
     private weatherService: WeatherService,
     private userService: UserService
-  ) {}
+  ) {
+    this.currentUser$ = this.userService.username$;
+
+    this.currentUser$.subscribe((name) => {
+      if (name) {
+        this.usernameInput = name;
+      }
+    });
+  }
 
   ngOnInit() {
     this.loadSavedLocations();
@@ -64,9 +78,14 @@ export class App {
   }
 
   loadSavedLocations() {
-    this.userService.getSavedLocations().subscribe((locations) => {
-      this.savedLocations = locations;
-    });
+    if (!this.usernameInput) {
+      return;
+    }
+    this.userService
+      .getSavedLocations(this.usernameInput)
+      .subscribe((locations) => {
+        this.savedLocations = locations;
+      });
   }
 
   handleSelectLocation(location: SavedLocation) {
@@ -85,5 +104,14 @@ export class App {
     this.userService.deleteLocation(cityId).subscribe(() => {
       this.loadSavedLocations();
     });
+  }
+
+  handleSetUsername() {
+    this.userService.setUsername(this.usernameInput.trim());
+  }
+
+  changeUser() {
+    this.userService.setUsername('');
+    this.usernameInput = '';
   }
 }

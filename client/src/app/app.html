@@ -5,6 +5,23 @@
     <p>Your personal weather dashboard</p>
   </header>
 
+
+  <div class="user-section-wrapper">
+    <div class="user-section">
+      <div *ngIf="currentUser$ | async as username; else usernameForm" class="welcome-message">
+        <span>Welcome, <strong>{{ username }}</strong>!</span>
+        <button (click)="changeUser()">Change User</button>
+      </div>
+      <ng-template #usernameForm>
+        <form (ngSubmit)="handleSetUsername()" class="username-form">
+          <input type="text" [(ngModel)]="usernameInput" name="username" placeholder="Enter your username"
+            aria-label="Username" required>
+          <button type="submit">Set User</button>
+        </form>
+      </ng-template>
+    </div>
+  </div>
+
   <app-search (locationConfirmed)="handleLocationConfirmed($event)"></app-search>
 
   <app-saved-locations [locations]="savedLocations" (locationSelected)="handleSelectLocation($event)"
@@ -28,7 +45,7 @@
           Weather for {{ locationData.name }}, {{ locationData.state ? locationData.state + ', ' : '' }}{{
           locationData.country }}
         </h2>
-        <button class="save-button" (click)="handleSaveLocation()">Save Location</button>
+        <button class="save-button" *ngIf="usernameInput" (click)="handleSaveLocation()">Save Location</button>
       </div>
 
       <app-current-weather [currentWeather]="weatherData.current"></app-current-weather>

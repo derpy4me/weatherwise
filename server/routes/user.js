@@ -5,12 +5,9 @@ const UserModel = require("../models/User");
 
 API_KEY = process.env.OPENWEATHER_API_KEY;
 
-//Dummy user for early prototype
-const DUMMY_USER_NAME = "dummy";
-
-router.get("/locations", async (req, res) => {
+router.get("/:username/locations", async (req, res) => {
   try {
-    const user = await UserModel.findOne({ username: DUMMY_USER_NAME });
+    const user = await UserModel.findOne({ username: req.params.username });
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -21,15 +18,15 @@ router.get("/locations", async (req, res) => {
   }
 });
 
-router.post("/locations", async (req, res) => {
+router.post("/:username/locations", async (req, res) => {
   const { cityId } = req.body;
   if (!cityId) {
     return res.status(400).json({ error: "cityId is required" });
   }
   try {
-    let user = await UserModel.findOne({ username: DUMMY_USER_NAME });
+    let user = await UserModel.findOne({ username: req.params.username });
     if (!user) {
-      user = new UserModel({ username: DUMMY_USER_NAME, savedLocations: [] });
+      user = new UserModel({ username: req.params.username, savedLocations: [] });
     }
     const alreadyExists = user.savedLocations.some((location) => location === cityId);
     if (alreadyExists) {
@@ -61,10 +58,10 @@ router.post("/locations", async (req, res) => {
   }
 });
 
-router.delete("/locations/:cityId", async (req, res) => {
+router.delete("/:username/locations/:cityId", async (req, res) => {
   const cityId = parseInt(req.params.cityId);
   try {
-    const user = await UserModel.findOne({ username: DUMMY_USER_NAME });
+    const user = await UserModel.findOne({ username: req.params.username });
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
