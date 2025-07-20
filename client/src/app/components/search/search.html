@@ -1,5 +1,18 @@
-<div class="search-container">
-  <input type="text" class="search-input" placeholder="Search for a city..." [(ngModel)]="searchQuery"
-    (keyup.enter)="onSearch()">
-  <button class="search-button" (click)="onSearch()">Search</button>
+<div class="search-wrapper">
+  <div class="search-container">
+    <input type="text" class="search-input" placeholder="Search for a city..." [(ngModel)]="searchQuery"
+      (keyup.enter)="onSearch()" [disabled]="isLoading">
+    <button class="search-button" (click)="onSearch()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">Search</span>
+      <span *ngIf="isLoading">Searching...</span>
+    </button>
+  </div>
+
+  <div *ngIf="error" class="search-error">
+    {{ error }}
+  </div>
+
+  <app-search-results *ngIf="searchResults.length > 0" [results]="searchResults"
+    (locationSelected)="onLocationSelected($event)">
+  </app-search-results>
 </div>

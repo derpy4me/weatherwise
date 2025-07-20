@@ -5,7 +5,10 @@
     <p>Your personal weather dashboard</p>
   </header>
 
-  <app-search (citySearched)="handleCitySearch($event)"></app-search>
+  <app-search (locationConfirmed)="handleLocationConfirmed($event)"></app-search>
+
+  <app-saved-locations [locations]="savedLocations" (locationSelected)="handleSelectLocation($event)"
+    (locationDeleted)="handleDeleteLocation($event)" />
 
   <div class="content-area">
 
@@ -20,15 +23,17 @@
 
     <div *ngIf="weatherData && locationData && !isLoading">
 
-      <h2 class="location-title">
-        Weather for {{ locationData.name }}, {{ locationData.state ? locationData.state + ', ' : '' }}{{
-        locationData.country }}
-      </h2>
+      <div class="location-header">
+        <h2 class="location-title">
+          Weather for {{ locationData.name }}, {{ locationData.state ? locationData.state + ', ' : '' }}{{
+          locationData.country }}
+        </h2>
+        <button class="save-button" (click)="handleSaveLocation()">Save Location</button>
+      </div>
 
       <app-current-weather [currentWeather]="weatherData.current"></app-current-weather>
 
       <app-forecast [forecast]="weatherData.forecast"></app-forecast>
-
     </div>
 
   </div>

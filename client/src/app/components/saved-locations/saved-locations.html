@@ -1,0 +1,11 @@
+<div class="saved-locations-container" *ngIf="locations && locations.length > 0">
+  <h3 class="container-title">Saved Locations</h3>
+  <div class="locations-list">
+    <div *ngFor="let loc of locations" class="location-item" (click)="onSelect(loc)" title="Click to view weather">
+      <span class="location-name">{{ loc.name }}, {{loc.state}} {{ loc.country }}</span>
+      <button class="delete-btn" (click)="onDelete($event, loc.cityId)" title="Delete location">
+        &times;
+      </button>
+    </div>
+  </div>
+</div>

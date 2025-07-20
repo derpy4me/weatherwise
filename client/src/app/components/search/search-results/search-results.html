@@ -1,0 +1,8 @@
+<div class="results-container">
+  <h3 class="results-title">Did you mean...?</h3>
+  <div class="results-list">
+    <div *ngFor="let result of results" class="result-item" (click)="onSelect(result)">
+      {{ result.name }}, {{ result.state ? result.state + ', ' : '' }}{{ result.country }}
+    </div>
+  </div>
+</div>
