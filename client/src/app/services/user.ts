@@ -36,6 +36,10 @@ export class UserService {
       )
       .pipe(
         tap((locations) => {
+          catchError((err) => {
+            console.error(err);
+            return throwError(() => err);
+          });
           this.savedLocations.next(locations);
         }),
         catchError(() => {
@@ -54,7 +58,15 @@ export class UserService {
       .post<SavedLocation[]>(`${this.apiUrl}/${username}/locations`, { cityId })
       .pipe(
         tap((updatedLocations) => {
+          console.log(
+            '[UserService:saveLocation] Received from server:',
+            updatedLocations
+          );
           this.savedLocations.next(updatedLocations);
+          console.log(
+            '[UserService:saveLocation] BehaviorSubject value is now:',
+            this.savedLocations.getValue()
+          );
         }),
         catchError((err) => {
           return throwError(() => err);
@@ -70,7 +82,17 @@ export class UserService {
     return this.http
       .delete<SavedLocation[]>(`${this.apiUrl}/${username}/locations/${cityId}`)
       .pipe(
-        tap((updatedLocations) => this.savedLocations.next(updatedLocations)),
+        tap((updatedLocations) => {
+          console.log(
+            '[UserService:deleteLocation] Received from server:',
+            updatedLocations
+          );
+          this.savedLocations.next(updatedLocations);
+          console.log(
+            '[UserService:deleteLocation] BehaviorSubject value is now:',
+            this.savedLocations.getValue()
+          );
+        }),
         catchError((err) => {
           return throwError(() => err);
         })

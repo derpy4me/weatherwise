@@ -51,7 +51,7 @@ router.post("/:username/locations", async (req, res) => {
 
     user.savedLocations.push(newLocation);
     await user.save();
-    res.status(201).json(newLocation);
+    res.status(201).json(user.savedLocations);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
@@ -65,9 +65,13 @@ router.delete("/:username/locations/:cityId", async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    user.savedLocations.pull({ cityId: cityId });
+    const locationIndex = user.savedLocations.findIndex((location) => location.cityId === cityId);
+    if (locationIndex > -1) {
+      user.savedLocations.splice(locationIndex, 1);
+    }
     await user.save();
-    res.json(user.savedLocations);
+    console.log("Deleted location: ", user.savedLocations);
+    res.status(200).json(user.savedLocations);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

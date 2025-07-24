@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { UserService } from '../../services/user';
 
 export interface SavedLocation {
@@ -20,7 +20,6 @@ export interface SavedLocation {
   styleUrl: './saved-locations.css',
 })
 export class SavedLocationsComponent {
-  @Input() locations: SavedLocation[] = [];
   @Output() locationSelected = new EventEmitter<SavedLocation>();
   @Output() locationDeleted = new EventEmitter<number>();
 
@@ -29,13 +28,13 @@ export class SavedLocationsComponent {
 
   constructor(private userService: UserService) {
     this.hasUser$ = this.userService.username$;
-    this.savedLocations$ = this.userService.username$.pipe(
-      switchMap((username) => {
-        if (!username) {
-          return of([]);
-        }
-        return this.userService.getSavedLocations(username);
-      })
+    this.savedLocations$ = this.userService.savedLocations$.pipe(
+      tap((locations) =>
+        console.log(
+          '[SavedLocationsComponent] received locations from service:',
+          locations
+        )
+      )
     );
   }
 

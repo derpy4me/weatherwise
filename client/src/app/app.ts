@@ -34,7 +34,6 @@ export class App {
   locationData: LocationResult | null = null;
   error: any;
   isLoading: boolean = false;
-  savedLocations: SavedLocation[] = [];
 
   usernameInput: string = '';
   currentUser$: Observable<string | null>;
@@ -81,11 +80,7 @@ export class App {
     if (!this.usernameInput) {
       return;
     }
-    this.userService
-      .getSavedLocations(this.usernameInput)
-      .subscribe((locations) => {
-        this.savedLocations = locations;
-      });
+    this.userService.getSavedLocations(this.usernameInput).subscribe();
   }
 
   handleSelectLocation(location: SavedLocation) {
@@ -95,15 +90,11 @@ export class App {
   handleSaveLocation() {
     const cityId = this.weatherData.current.id;
     if (!cityId) return;
-    this.userService.saveLocation(cityId).subscribe(() => {
-      this.loadSavedLocations();
-    });
+    this.userService.saveLocation(cityId).subscribe();
   }
 
   handleDeleteLocation(cityId: number) {
-    this.userService.deleteLocation(cityId).subscribe(() => {
-      this.loadSavedLocations();
-    });
+    this.userService.deleteLocation(cityId).subscribe();
   }
 
   handleSetUsername() {
